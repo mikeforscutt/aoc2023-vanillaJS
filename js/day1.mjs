@@ -1,13 +1,18 @@
 import { asLines } from "./util.mjs";
 
-const lineToCalibrationValueA = (line) => {
-  const first = line.match(/^[^\d]*(\d)/)[1];
-  const last = line.match(/(\d)[^\d]*$/)[1];
-  return parseInt(first + last);
-};
+const input_val = asLines("day1_input.txt");
 
-const day1a = asLines("day1_input.txt")
-  .map(lineToCalibrationValueA)
-  .reduce((a, b) => a + b, 0);
+let sum = 0;
 
-console.log(`day1 part a: ${day1a}`);
+input_val.forEach((line) => {
+  const firstDigit = line.match(/\d/);
+  const lastDigit = line.match(/\d(?=\D*$)/);
+
+  if (firstDigit && lastDigit) {
+    const combinedNumber = parseInt(firstDigit[0] + lastDigit[0]);
+
+    sum += combinedNumber;
+  }
+});
+
+console.log("Total calibration value:", sum);
